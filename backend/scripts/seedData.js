@@ -13,7 +13,12 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Telemetry = require('../src/models/Telemetry');
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/windturbine';
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+    console.error('Error: MONGO_URI is not set in .env');
+    process.exit(1);
+}
 
 // Experiment definitions
 const experiments = [

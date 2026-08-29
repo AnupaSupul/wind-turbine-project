@@ -14,8 +14,10 @@ Create a `.env` file:
 
 ```
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/windturbine
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/windturbine?retryWrites=true&w=majority
 ```
+
+> **Note:** Never commit `.env` or expose credentials. The `.gitignore` already excludes `.env`.
 
 ## Running
 
