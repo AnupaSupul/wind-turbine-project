@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/database');
+const { initializeCache } = require('./services/telemetryService');
 const telemetryRoutes = require('./routes/telemetryRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 
@@ -49,6 +50,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         await connectDB();
+        await initializeCache();
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
             console.log(`Health check: http://localhost:${PORT}/api/health`);

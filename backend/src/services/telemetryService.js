@@ -1,8 +1,16 @@
 const Telemetry = require('../models/Telemetry');
 
 /**
+ * In-memory cache for the latest telemetry record.
+ * Updated on every successful save; returned by getLatest().
+ * This avoids hitting MongoDB Atlas on every 200ms poll from the React dashboard.
+ */
+let currentLatest = null;
+
+/**
  * Save a validated telemetry record.
  * Calculates power from voltage × current (server-side).
+ * Updates the in-memory latest cache after saving.
  */
 const saveTelemetry = async (data) => {
     const power = data.voltage * data.current;
@@ -20,15 +28,47 @@ const saveTelemetry = async (data) => {
     });
 
     const saved = await telemetry.save();
+
+    // Update in-memory cache
+    currentLatest = saved.toObject();
+
     return saved;
 };
 
 /**
- * Get the most recent telemetry record.
+ * Get the most recent telemetry record from in-memory cache.
+ * Falls back to a MongoDB query only if the cache is empty (e.g. first request after restart).
  */
 const getLatest = async () => {
+    if (currentLatest) {
+        return currentLatest;
+    }
+
+    // Fallback: populate cache from DB (runs at most once per server lifetime)
     const latest = await Telemetry.findOne().sort({ timestamp: -1 }).lean();
+    if (latest) {
+        currentLatest = latest;
+    }
     return latest;
+};
+
+/**
+ * Initialize the in-memory cache from MongoDB.
+ * Should be called once at server startup so the cache is warm
+ * before the first GET /latest request arrives.
+ */
+const initializeCache = async () => {
+    try {
+        const latest = await Telemetry.findOne().sort({ timestamp: -1 }).lean();
+        if (latest) {
+            currentLatest = latest;
+            console.log(`Telemetry cache initialized: ${latest.experimentId} @ ${latest.timestamp}`);
+        } else {
+            console.log('Telemetry cache: no existing records found');
+        }
+    } catch (error) {
+        console.error('Failed to initialize telemetry cache:', error.message);
+    }
 };
 
 /**
@@ -95,4 +135,5 @@ const getHistory = async (filters = {}) => {
     };
 };
 
-module.exports = { saveTelemetry, getLatest, getHistory };
+module.exports = { saveTelemetry, getLatest, getHistory, initializeCache };
+
