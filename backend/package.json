@@ -6,9 +6,14 @@
   "scripts": {
     "start": "node src/server.js",
     "seed": "node scripts/seedData.js",
+    "simulate": "node scripts/liveSimulator.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["wind-turbine", "iot", "monitoring"],
+  "keywords": [
+    "wind-turbine",
+    "iot",
+    "monitoring"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
