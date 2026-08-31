@@ -36,9 +36,7 @@ Two bar charts provide engineering insight into turbine performance:
 - **Bars:** Each pitch angle gets a different colour
 - **What it shows:** How average power differs across pitch angles
 
-### ⚠️ Scientific Note
-A yellow warning note appears below the pitch angle chart:
-
-> "Different pitch angles were tested under different wind conditions. Direct power comparison may not reflect pitch effectiveness alone."
-
-This is important — the experiments have different wind speed ranges, so observed power differences may be due to wind speed differences, not just pitch angle differences. For a fair comparison, a controlled experiment would need to test each pitch angle at the **same wind speeds**.
+> [!WARNING]
+> Different pitch angles were tested under different wind conditions. Direct power comparison may not reflect pitch effectiveness alone.
+>
+> This is important — the experiments have different wind speed ranges, so observed power differences may be due to wind speed differences, not just pitch angle differences. For a fair comparison, a controlled experiment would need to test each pitch angle at the **same wind speeds**.

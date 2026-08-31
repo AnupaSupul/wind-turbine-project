@@ -20,24 +20,12 @@ This happens **5 times every second**, which makes the display appear live.
 
 ### What Happens Behind the Scenes
 
-```
-Dashboard                    Backend                     Database
-    │                           │                           │
-    │── GET /latest ──────────▶│                           │
-    │                          │── read from memory ──▶   │
-    │◀── latest value ────────│                           │
-    │                          │                           │
-    │   (update display)       │                           │
-    │                          │                           │
-    │   ... wait 200ms ...     │                           │
-    │                          │                           │
-    │── GET /latest ──────────▶│                           │
-    │                          │── read from memory ──▶   │
-    │◀── latest value ────────│                           │
-    │                          │                           │
-```
+<p align="center">
+  <img src="../assets/diagrams/live-dashboard-flow.svg" alt="Dashboard Live Update Flow" width="100%">
+</p>
 
-Notice: The backend reads from **memory** (very fast), not from the database. The database is only queried for historical data and analytics.
+> [!IMPORTANT]
+> The backend reads from **Node.js memory** (which is instantaneous), not from the database. The database is only queried for historical data and analytics. This prevents overloading MongoDB Atlas when the dashboard polls 5 times per second.
 
 ## Rolling Chart Buffer
 

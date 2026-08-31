@@ -4,7 +4,6 @@
 
 The system has three main parts that work together:
 
-```
 ┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
 │   Data Source        │     │   Backend Server     │     │   Dashboard          │
 │                     │     │                     │     │                     │
@@ -17,7 +16,10 @@ The system has three main parts that work together:
                             │   MongoDB Atlas      │
                             │   (cloud database)   │
                             └─────────────────────┘
-```
+
+<p align="center">
+  <img src="../assets/diagrams/overall-architecture.svg" alt="System Architecture Diagram" width="100%">
+</p>
 
 ## The Three Parts
 

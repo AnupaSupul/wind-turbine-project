@@ -6,11 +6,11 @@
 
 **Symptom:** `npm start` fails or shows an error.
 
-| Error | Cause | Solution |
+| 🚨 Error Message | 🔍 Cause | 🛠️ Solution |
 |---|---|---|
-| `Error: MONGO_URI is not set` | Missing `.env` file | Create `backend/.env` with PORT and MONGO_URI |
-| `MongoServerSelectionError` | Wrong Atlas credentials or network | Check username/password in MONGO_URI |
-| `address already in use :::5000` | Port 5000 is taken | Close the other program using port 5000, or change PORT in `.env` |
+| `Error: MONGO_URI is not set` | Missing `.env` file | Create `backend/.env` with `PORT` and `MONGO_URI` |
+| `MongoServerSelectionError` | Wrong Atlas credentials or network | Check username/password in `MONGO_URI` |
+| `address already in use :::5000` | Port `5000` is taken | Close the other program using port 5000, or change `PORT` in `.env` |
 | `Cannot find module ...` | Missing dependencies | Run `npm install` in the `backend/` folder |
 
 **How to find what's using port 5000 (Windows):**
@@ -24,10 +24,10 @@ netstat -ano | findstr :5000
 
 **Symptom:** `npm run dev` fails or the page won't load.
 
-| Error | Cause | Solution |
+| 🚨 Error Message | 🔍 Cause | 🛠️ Solution |
 |---|---|---|
-| Port 5173 is in use | Another Vite instance is running | Close the other terminal running Vite, or kill the process |
-| Shows port 5174 instead of 5173 | Another instance already on 5173 | Close all terminals and restart |
+| Port `5173` is in use | Another Vite instance is running | Close the other terminal running Vite, or kill the process |
+| Shows port `5174` instead of `5173` | Another instance already on `5173` | Close all terminals and restart |
 | Blank page | JavaScript error | Open browser console (F12) and check for errors |
 | `Cannot find module ...` | Missing dependencies | Run `npm install` in the `frontend/` folder |
 

@@ -18,19 +18,9 @@ Every measurement (called a **telemetry record**) contains these values:
 
 ## Data Flow Diagram
 
-```mermaid
-flowchart TD
-    A["Simulator / ESP32"] -->|"HTTP POST<br>wind, voltage, current, pitch..."| B["Backend Server"]
-    B -->|"Validates data"| C{"Valid?"}
-    C -->|"No"| D["Return error 400"]
-    C -->|"Yes"| E["Calculate power = V × I"]
-    E --> F["Save to MongoDB Atlas"]
-    E --> G["Update in-memory cache"]
-    
-    H["Dashboard"] -->|"HTTP GET /latest<br>every 200ms"| I["Backend returns cached value"]
-    H -->|"HTTP GET /history"| J["Backend queries MongoDB Atlas"]
-    H -->|"HTTP GET /analytics"| K["Backend runs aggregation queries"]
-```
+<p align="center">
+  <img src="../assets/diagrams/data-flow.svg" alt="Data Flow Diagram" width="100%">
+</p>
 
 ## Important: Power Calculation
 

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" width="100%" height="100%">
+    <defs>
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.05" />
+        </filter>
+        <linearGradient id="grad-blue" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ebf4ff"/>
+            <stop offset="100%" stop-color="#dbeafe"/>
+        </linearGradient>
+        <linearGradient id="grad-green" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f0fdf4"/>
+            <stop offset="100%" stop-color="#dcfce7"/>
+        </linearGradient>
+        <linearGradient id="grad-purple" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#faf5ff"/>
+            <stop offset="100%" stop-color="#f3e8ff"/>
+        </linearGradient>
+        <linearGradient id="grad-amber" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fffbeb"/>
+            <stop offset="100%" stop-color="#fef3c7"/>
+        </linearGradient>
+        <linearGradient id="grad-gray" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f8fafc"/>
+            <stop offset="100%" stop-color="#f1f5f9"/>
+        </linearGradient>
+    </defs>
+    <style>
+        .title { font-family: -apple-system, system-ui, sans-serif; font-size: 16px; font-weight: 700; fill: #1e293b; text-anchor: middle; }
+        .subtitle { font-family: -apple-system, system-ui, sans-serif; font-size: 12px; fill: #64748b; text-anchor: middle; }
+        .text-left { text-anchor: start; }
+        .label { font-family: -apple-system, system-ui, sans-serif; font-size: 13px; font-weight: 500; fill: #475569; text-anchor: middle; }
+        .sublabel { font-family: -apple-system, system-ui, sans-serif; font-size: 11px; fill: #94a3b8; text-anchor: middle; }
+        path { stroke: #94a3b8; stroke-width: 2; fill: none; }
+        .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+        .animated-arrow { stroke: #3b82f6; stroke-width: 2; stroke-dasharray: 4; animation: dash 1s linear infinite; }
+    </style>
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8" />
+        </marker>
+    </defs>
+    <rect width="900" height="320" fill="#ffffff" rx="12" />
+    <rect x="50" y="50" width="140" height="70" rx="8" fill="url(#grad-blue)" stroke="#bfdbfe" stroke-width="1.5" filter="url(#shadow)" />
+<text class="title" x="120.0" y="84.0">Simulator</text>
+<text class="subtitle" x="120.0" y="101.0">Starts</text>
+<line x1="190" y1="85" x2="250" y2="85" class="arrow" />
+<rect x="250" y="50" width="180" height="70" rx="8" fill="url(#grad-gray)" stroke="#e2e8f0" stroke-width="1.5" filter="url(#shadow)" />
+<text class="title" x="340.0" y="84.0">Generate Measurement</text>
+<text class="subtitle" x="340.0" y="101.0">Smoothly varies</text>
+<line x1="430" y1="85" x2="490" y2="85" class="arrow" />
+<rect x="490" y="50" width="160" height="70" rx="8" fill="url(#grad-green)" stroke="#bbf7d0" stroke-width="1.5" filter="url(#shadow)" />
+<text class="title" x="570.0" y="84.0">POST Telemetry</text>
+<text class="subtitle" x="570.0" y="101.0">To backend</text>
+<line x1="650" y1="85" x2="710" y2="85" class="arrow" />
+<rect x="710" y="50" width="140" height="70" rx="8" fill="url(#grad-amber)" stroke="#fde68a" stroke-width="1.5" filter="url(#shadow)" />
+<text class="title" x="780.0" y="84.0">Wait 200 ms</text>
+<text class="subtitle" x="780.0" y="101.0">Hold</text>
+<path d="M 780 120 L 780 160 L 340 160 L 340 120" class="arrow" />
+<rect x="480" y="150" width="160" height="20" fill="white" rx="4" />
+<text class="label" x="560" y="164">Repeat 300 times</text>
+<line x1="120" y1="120" x2="120" y2="200" class="arrow" />
+<rect x="50" y="200" width="600" height="70" rx="8" fill="url(#grad-purple)" stroke="#e9d5ff" stroke-width="1.5" filter="url(#shadow)" />
+<text class="title" x="350.0" y="234.0">Switch Experiment (e.g. EXP-001 → EXP-002)</text>
+<text class="subtitle" x="350.0" y="251.0">After ~60 seconds</text>
+<path d="M 350 200 L 350 160" class="arrow" />
+</svg>

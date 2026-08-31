@@ -32,12 +32,13 @@ A web-based dashboard shows the measurements in real time. Engineers can see:
 
 ## Current Status
 
-| Component | Status |
+| ⚙️ Component | 🚥 Status |
 |---|---|
-| Backend server | ✅ Complete |
-| Database (MongoDB Atlas) | ✅ Connected |
-| Dashboard (React) | ✅ Complete |
-| Simulator | ✅ Complete |
-| Real ESP32 hardware | ⏳ Not yet connected |
+| **Backend Server** | ✅ Complete |
+| **Database (MongoDB Atlas)** | ✅ Connected |
+| **Dashboard (React)** | ✅ Complete |
+| **Live Simulator** | ✅ Complete |
+| **Real ESP32 Hardware** | ⏳ Not yet connected |
 
-The system is fully functional using simulated data. When the real ESP32 hardware is ready, it will send measurements into the same system — no major software changes will be needed.
+> [!IMPORTANT]
+> The system is fully functional using simulated data. When the real ESP32 hardware is ready, it will send measurements into the same backend system over HTTP — no major software changes will be needed.

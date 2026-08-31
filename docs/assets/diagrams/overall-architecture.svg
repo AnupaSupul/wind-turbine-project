@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="100%" height="100%">
+    <defs>
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.05" />
+        </filter>
+        <linearGradient id="grad-blue" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ebf4ff"/>
+            <stop offset="100%" stop-color="#dbeafe"/>
+        </linearGradient>
+        <linearGradient id="grad-green" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f0fdf4"/>
+            <stop offset="100%" stop-color="#dcfce7"/>
+        </linearGradient>
+        <linearGradient id="grad-purple" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#faf5ff"/>
+            <stop offset="100%" stop-color="#f3e8ff"/>
+        </linearGradient>
+        <linearGradient id="grad-amber" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fffbeb"/>
+            <stop offset="100%" stop-color="#fef3c7"/>
+        </linearGradient>
+        <linearGradient id="grad-gray" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f8fafc"/>
+            <stop offset="100%" stop-color="#f1f5f9"/>
+        </linearGradient>
+    </defs>
+    <style>
+        .title { font-family: -apple-system, system-ui, sans-serif; font-size: 16px; font-weight: 700; fill: #1e293b; text-anchor: middle; }
+        .subtitle { font-family: -apple-system, system-ui, sans-serif; font-size: 12px; fill: #64748b; text-anchor: middle; }
+        .text-left { text-anchor: start; }
+        .label { font-family: -apple-system, system-ui, sans-serif; font-size: 13px; font-weight: 500; fill: #475569; text-anchor: middle; }
+        .sublabel { font-family: -apple-system, system-ui, sans-serif; font-size: 11px; fill: #94a3b8; text-anchor: middle; }
+        path { stroke: #94a3b8; stroke-width: 2; fill: none; }
+        .arrow { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+        .animated-arrow { stroke: #3b82f6; stroke-width: 2; stroke-dasharray: 4; animation: dash 1s linear infinite; }
+    </style>
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8" />
+        </marker>
+    </defs>
+    <rect width="900" height="350" fill="#ffffff" rx="12" />
+    <rect x="50" y="50" width="200" height="100" rx="8" fill="url(#grad-blue)" stroke="#bfdbfe" stroke-width="1.5" filter="url(#shadow)" />
+<text x="150.0" y="79.0" font-size="20" text-anchor="middle">📡</text>
+<text class="title" x="150.0" y="114.0">ESP32 / Simulator</text>
+<text class="subtitle" x="150.0" y="131.0">Data Source</text>
+<line x1="250" y1="100" x2="350" y2="100" class="arrow" />
+<rect x="254.0" y="90.0" width="92" height="20" fill="white" rx="4" />
+<text class="label" x="300.0" y="104.0">HTTP POST</text>
+<text class="sublabel" x="300.0" y="118.0">Wi-Fi</text>
+<rect x="350" y="50" width="200" height="100" rx="8" fill="url(#grad-green)" stroke="#bbf7d0" stroke-width="1.5" filter="url(#shadow)" />
+<text x="450.0" y="79.0" font-size="20" text-anchor="middle">⚙️</text>
+<text class="title" x="450.0" y="114.0">Node.js + Express</text>
+<text class="subtitle" x="450.0" y="131.0">Backend Server</text>
+<line x1="450" y1="150" x2="450" y2="220" class="arrow" />
+<rect x="396.0" y="175.0" width="108" height="20" fill="white" rx="4" />
+<text class="label" x="450.0" y="189.0">Persistence</text>
+<text class="sublabel" x="450.0" y="203.0">Save to DB</text>
+<rect x="350" y="220" width="200" height="80" rx="8" fill="url(#grad-amber)" stroke="#fde68a" stroke-width="1.5" filter="url(#shadow)" />
+<text x="450.0" y="239.0" font-size="20" text-anchor="middle">💾</text>
+<text class="title" x="450.0" y="274.0">MongoDB Atlas</text>
+<text class="subtitle" x="450.0" y="291.0">Cloud Database</text>
+<line x1="550" y1="100" x2="650" y2="100" class="arrow" />
+<rect x="542.0" y="90.0" width="116" height="20" fill="white" rx="4" />
+<text class="label" x="600.0" y="104.0">Memory Cache</text>
+<text class="sublabel" x="600.0" y="118.0">Update</text>
+<rect x="650" y="50" width="160" height="100" rx="8" fill="url(#grad-gray)" stroke="#e2e8f0" stroke-width="1.5" filter="url(#shadow)" />
+<text x="730.0" y="79.0" font-size="20" text-anchor="middle">⚡</text>
+<text class="title" x="730.0" y="114.0">Latest Telemetry</text>
+<text class="subtitle" x="730.0" y="131.0">Node.js Memory</text>
+<line x1="730" y1="150" x2="730" y2="220" class="arrow" />
+<rect x="688.0" y="175.0" width="84" height="20" fill="white" rx="4" />
+<text class="label" x="730.0" y="189.0">HTTP GET</text>
+<text class="sublabel" x="730.0" y="203.0">Every 200 ms</text>
+<rect x="650" y="220" width="160" height="80" rx="8" fill="url(#grad-purple)" stroke="#e9d5ff" stroke-width="1.5" filter="url(#shadow)" />
+<text x="730.0" y="239.0" font-size="20" text-anchor="middle">📊</text>
+<text class="title" x="730.0" y="274.0">React Dashboard</text>
+<text class="subtitle" x="730.0" y="291.0">Frontend User Interface</text>
+</svg>
