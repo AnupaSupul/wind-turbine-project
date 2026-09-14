@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { fetchSummary } from '../api/analyticsApi';
 import './SummaryPanel.css';
 
 const STAT_GROUPS = [
-    { key: 'windSpeed', label: 'Wind Speed', unit: 'm/s', icon: '🌬️' },
-    { key: 'power', label: 'Power', unit: 'W', icon: '💡' },
-    { key: 'voltage', label: 'Voltage', unit: 'V', icon: '⚡' },
-    { key: 'current', label: 'Current', unit: 'A', icon: '🔌' },
+    { key: 'power', label: 'Power', unit: 'W', color: 'var(--color-power)' },
+    { key: 'windSpeed', label: 'Wind Speed', unit: 'm/s', color: 'var(--color-wind)' },
+    { key: 'voltage', label: 'Voltage', unit: 'V', color: 'var(--color-voltage)' },
+    { key: 'current', label: 'Current', unit: 'A', color: 'var(--color-current)' },
 ];
 
-export default function SummaryPanel({ experimentId }) {
+function SummaryPanel({ experimentId }) {
     const [summary, setSummary] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -33,31 +33,49 @@ export default function SummaryPanel({ experimentId }) {
     if (!summary) return <div className="card"><p className="loading-text">No data available</p></div>;
 
     return (
-        <div className="summary-panel card">
-            <h2 className="card-title">Summary Statistics</h2>
-            <p className="summary-count">{summary.count} measurements</p>
-            <div className="stat-groups">
+        <div className="summary-panel card" id="summary-stats">
+            <div className="summary-header">
+                <div>
+                    <h2 className="card-title">Summary Statistics</h2>
+                    <p className="card-subtitle">
+                        Aggregated from {summary.count} measurements
+                    </p>
+                </div>
+            </div>
+            <div className="stat-grid">
                 {STAT_GROUPS.map(group => {
                     const s = summary[group.key];
                     if (!s) return null;
                     return (
-                        <div key={group.key} className="stat-group">
-                            <div className="stat-group-header">
-                                <span className="stat-icon">{group.icon}</span>
+                        <div
+                            key={group.key}
+                            className="stat-card"
+                            style={{ '--stat-color': group.color }}
+                        >
+                            <div className="stat-card-header">
                                 <span className="stat-group-label">{group.label}</span>
                             </div>
-                            <div className="stat-row">
+                            <div className="stat-values">
                                 <div className="stat-item">
                                     <span className="stat-label">Avg</span>
-                                    <span className="stat-value">{s.avg} <small>{group.unit}</small></span>
-                                </div>
-                                <div className="stat-item">
-                                    <span className="stat-label">Min</span>
-                                    <span className="stat-value">{s.min} <small>{group.unit}</small></span>
+                                    <span className="stat-value">
+                                        {s.avg}
+                                        <small> {group.unit}</small>
+                                    </span>
                                 </div>
                                 <div className="stat-item">
                                     <span className="stat-label">Max</span>
-                                    <span className="stat-value">{s.max} <small>{group.unit}</small></span>
+                                    <span className="stat-value">
+                                        {s.max}
+                                        <small> {group.unit}</small>
+                                    </span>
+                                </div>
+                                <div className="stat-item">
+                                    <span className="stat-label">Min</span>
+                                    <span className="stat-value">
+                                        {s.min}
+                                        <small> {group.unit}</small>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -67,3 +85,5 @@ export default function SummaryPanel({ experimentId }) {
         </div>
     );
 }
+
+export default memo(SummaryPanel);
