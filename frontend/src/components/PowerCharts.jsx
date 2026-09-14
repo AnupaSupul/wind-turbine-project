@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import {
-    BarChart, Bar, ScatterChart, Scatter,
+    BarChart, Bar,
     XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
 } from 'recharts';
 import { fetchPowerAnalytics } from '../api/analyticsApi';
@@ -8,7 +8,7 @@ import './PowerCharts.css';
 
 const PITCH_COLORS = ['#3b82f6', '#f59e0b', '#22c55e', '#ef4444', '#a855f7', '#ec4899'];
 
-export default function PowerCharts({ experimentId }) {
+function PowerCharts({ experimentId }) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -31,26 +31,36 @@ export default function PowerCharts({ experimentId }) {
     if (loading) return <div className="card"><p className="loading-text">Loading analytics...</p></div>;
     if (!data) return <div className="card"><p className="loading-text">No analytics data</p></div>;
 
+    const tooltipStyle = {
+        background: 'rgba(15, 23, 42, 0.95)',
+        border: '1px solid rgba(56, 97, 150, 0.3)',
+        borderRadius: 8,
+        backdropFilter: 'blur(8px)',
+        padding: '8px 12px',
+    };
+
     return (
-        <div className="power-charts">
+        <div className="power-charts" id="power-charts">
             {/* Power vs Wind Speed */}
             <div className="card">
-                <h2 className="card-title">Power vs Wind Speed</h2>
+                <h3 className="card-title">Power vs Wind Speed</h3>
                 <p className="chart-desc">Average power output grouped by wind speed</p>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={280}>
                     <BarChart data={data.powerByWindSpeed}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                         <XAxis
                             dataKey="windSpeed"
-                            tick={{ fontSize: 11, fill: '#94a3b8' }}
-                            label={{ value: 'Wind Speed (m/s)', position: 'insideBottom', offset: -5, fill: '#94a3b8', fontSize: 12 }}
+                            tick={{ fontSize: 10, fill: '#64748b' }}
+                            label={{ value: 'Wind Speed (m/s)', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 11 }}
+                            axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
                         />
                         <YAxis
-                            tick={{ fontSize: 11, fill: '#94a3b8' }}
-                            label={{ value: 'Power (W)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12 }}
+                            tick={{ fontSize: 10, fill: '#64748b' }}
+                            label={{ value: 'Power (W)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }}
+                            axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
                         />
                         <Tooltip
-                            contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 6 }}
+                            contentStyle={tooltipStyle}
                             formatter={(val, name) => {
                                 const labels = { avgPower: 'Avg Power', minPower: 'Min', maxPower: 'Max' };
                                 return [`${val} W`, labels[name] || name];
@@ -64,22 +74,24 @@ export default function PowerCharts({ experimentId }) {
 
             {/* Power vs Pitch Angle */}
             <div className="card">
-                <h2 className="card-title">Power vs Pitch Angle</h2>
-                <p className="chart-desc">Average power at each pitch angle (with avg wind speed context)</p>
-                <ResponsiveContainer width="100%" height={300}>
+                <h3 className="card-title">Power vs Pitch Angle</h3>
+                <p className="chart-desc">Average power at each pitch angle configuration</p>
+                <ResponsiveContainer width="100%" height={280}>
                     <BarChart data={data.powerByPitchAngle}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                         <XAxis
                             dataKey="pitchAngle"
-                            tick={{ fontSize: 11, fill: '#94a3b8' }}
-                            label={{ value: 'Pitch Angle (°)', position: 'insideBottom', offset: -5, fill: '#94a3b8', fontSize: 12 }}
+                            tick={{ fontSize: 10, fill: '#64748b' }}
+                            label={{ value: 'Pitch Angle (°)', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 11 }}
+                            axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
                         />
                         <YAxis
-                            tick={{ fontSize: 11, fill: '#94a3b8' }}
-                            label={{ value: 'Power (W)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12 }}
+                            tick={{ fontSize: 10, fill: '#64748b' }}
+                            label={{ value: 'Power (W)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }}
+                            axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
                         />
                         <Tooltip
-                            contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 6 }}
+                            contentStyle={tooltipStyle}
                             formatter={(val, name) => {
                                 if (name === 'avgPower') return [`${val} W`, 'Avg Power'];
                                 if (name === 'avgWindSpeed') return [`${val} m/s`, 'Avg Wind'];
@@ -102,3 +114,5 @@ export default function PowerCharts({ experimentId }) {
         </div>
     );
 }
+
+export default memo(PowerCharts);
