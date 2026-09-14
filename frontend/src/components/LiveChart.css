@@ -1,37 +1,133 @@
 .live-chart-container .chart-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.metric-selector {
+.chart-controls-row {
     display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.selector-btn {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.7rem;
+.chart-metric-select {
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.chart-metric-select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* ─── Metric Pills ───────────────────────────────── */
+.metric-pills {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.metric-pill {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.68rem;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 20px;
     background: transparent;
     color: var(--text-muted);
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    font-weight: 500;
 }
 
-.selector-btn:hover {
-    border-color: var(--text-muted);
+.metric-pill:hover {
+    border-color: var(--text-dim);
+    color: var(--text-secondary);
 }
 
-.selector-btn.active {
-    background: rgba(59, 130, 246, 0.1);
+.metric-pill.active {
+    font-weight: 600;
 }
 
+/* ─── Chart Body ─────────────────────────────────── */
 .chart-body {
     width: 100%;
+    margin-bottom: 0.75rem;
+}
+
+/* ─── Chart Options (toggles) ────────────────────── */
+.chart-options {
+    display: flex;
+    gap: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+}
+
+.chart-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.chart-toggle input {
+    display: none;
+}
+
+.toggle-slider {
+    width: 28px;
+    height: 16px;
+    background: var(--border);
+    border-radius: 8px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.toggle-slider::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.chart-toggle input:checked + .toggle-slider {
+    background: var(--accent);
+}
+
+.chart-toggle input:checked + .toggle-slider::after {
+    left: 14px;
+    background: white;
+}
+
+.toggle-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .metric-pills {
+        gap: 0.25rem;
+    }
+
+    .metric-pill {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.62rem;
+    }
 }

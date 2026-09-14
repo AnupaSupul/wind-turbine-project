@@ -9,6 +9,8 @@ const MAX_CHART_POINTS = 60; // rolling window for live chart
  * - Prevents request overlap (skips if previous fetch still in-flight)
  * - Maintains a rolling buffer of recent data points for live charting
  * - Tracks connection status
+ * - Tracks telemetry freshness (is fresh data actually arriving?)
+ * - Tracks session start time for frontend session timer
  * - Cleans up on unmount
  */
 export function usePolling() {
@@ -16,9 +18,15 @@ export function usePolling() {
     const [chartData, setChartData] = useState([]);
     const [isConnected, setIsConnected] = useState(false);
     const [lastUpdate, setLastUpdate] = useState(null);
+    const [isTelemetryFresh, setIsTelemetryFresh] = useState(false);
     const inFlight = useRef(false);
     const intervalRef = useRef(null);
     const abortRef = useRef(null);
+    const prevTimestampRef = useRef(null);
+    const sessionStartRef = useRef(new Date());
+    // Track stale count: if several consecutive polls return same timestamp, telemetry is stale
+    const staleCountRef = useRef(0);
+    const STALE_THRESHOLD = 10; // after 10 identical timestamps (~2 seconds), mark stale
 
     const poll = useCallback(async () => {
         // Skip if previous request is still in-flight
@@ -34,6 +42,19 @@ export function usePolling() {
                 setIsConnected(true);
                 setLastUpdate(new Date());
 
+                // Check telemetry freshness by comparing timestamps
+                const currentTimestamp = res.data.timestamp;
+                if (prevTimestampRef.current && prevTimestampRef.current === currentTimestamp) {
+                    staleCountRef.current++;
+                    if (staleCountRef.current >= STALE_THRESHOLD) {
+                        setIsTelemetryFresh(false);
+                    }
+                } else {
+                    staleCountRef.current = 0;
+                    setIsTelemetryFresh(true);
+                }
+                prevTimestampRef.current = currentTimestamp;
+
                 // Append to rolling chart buffer
                 setChartData(prev => {
                     const point = {
@@ -43,6 +64,7 @@ export function usePolling() {
                         voltage: res.data.voltage,
                         current: res.data.current,
                         pitchAngle: res.data.pitchAngle,
+                        stepperPosition: res.data.stepperPosition,
                     };
                     const next = [...prev, point];
                     return next.length > MAX_CHART_POINTS ? next.slice(-MAX_CHART_POINTS) : next;
@@ -51,6 +73,7 @@ export function usePolling() {
         } catch (err) {
             if (err.name !== 'AbortError') {
                 setIsConnected(false);
+                setIsTelemetryFresh(false);
             }
         } finally {
             inFlight.current = false;
@@ -67,5 +90,12 @@ export function usePolling() {
         };
     }, [poll]);
 
-    return { latest, chartData, isConnected, lastUpdate };
+    return {
+        latest,
+        chartData,
+        isConnected,
+        lastUpdate,
+        isTelemetryFresh,
+        sessionStart: sessionStartRef.current,
+    };
 }
