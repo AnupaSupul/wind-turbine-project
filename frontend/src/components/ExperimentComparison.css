@@ -1,99 +1,166 @@
-.experiment-comparison .experiment-header {
+.experiment-section .experiment-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
     flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.experiment-controls {
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
 }
 
 .experiment-select {
     padding: 0.4rem 0.8rem;
     border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--bg);
+    border: 1px solid var(--glass-border);
+    background: var(--bg-elevated);
     color: var(--text-primary);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     cursor: pointer;
+    font-family: inherit;
 }
 
-.experiment-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.8rem;
-}
-
-.experiment-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.8rem;
-    cursor: pointer;
-    transition: all 0.15s;
-}
-
-.experiment-card:hover {
+.experiment-select:focus {
+    outline: none;
     border-color: var(--accent);
-}
-
-.experiment-card.selected {
-    border-color: var(--accent);
-    background: rgba(59, 130, 246, 0.08);
-}
-
-.exp-id {
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    margin-bottom: 0.4rem;
-}
-
-.exp-details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-}
-
-.exp-details strong {
-    color: var(--text-primary);
-}
-
-.exp-source {
-    display: inline-block;
-    padding: 0.1rem 0.4rem;
-    border-radius: 3px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    width: fit-content;
-    margin-top: 0.2rem;
-}
-
-.exp-source.simulator {
-    background: rgba(234, 179, 8, 0.15);
-    color: #eab308;
-}
-
-.exp-source.esp32 {
-    background: rgba(34, 197, 94, 0.15);
-    color: #22c55e;
 }
 
 .clear-filter-btn {
-    margin-top: 0.8rem;
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 0.8rem;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 6px;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s;
+    font-family: inherit;
 }
 
 .clear-filter-btn:hover {
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+}
+
+/* ─── Experiment Cards ───────────────────────────── */
+.experiment-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.exp-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.exp-card:hover {
     border-color: var(--accent);
+    background: rgba(59, 130, 246, 0.03);
+}
+
+.exp-card.selected {
+    border-color: var(--accent);
+    background: rgba(59, 130, 246, 0.06);
+}
+
+.exp-card.current {
+    border-color: var(--color-success);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.08);
+}
+
+.exp-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.exp-id {
+    font-weight: 800;
+    font-size: 0.95rem;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.exp-badge {
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.exp-badge-current {
+    background: rgba(34, 197, 94, 0.12);
+    color: var(--color-success);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+/* ─── Experiment Details Grid ────────────────────── */
+.exp-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.exp-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.exp-detail-label {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+
+.exp-detail-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.exp-card-footer {
+    display: flex;
+    align-items: center;
+}
+
+.exp-source-tag {
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.exp-source-tag.simulator {
+    background: rgba(234, 179, 8, 0.12);
+    color: #eab308;
+}
+
+.exp-source-tag.esp32 {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+}
+
+@media (max-width: 480px) {
+    .experiment-cards {
+        grid-template-columns: 1fr;
+    }
 }

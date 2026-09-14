@@ -2,61 +2,112 @@ import { useState } from 'react';
 import { usePolling } from './hooks/usePolling';
 import Header from './components/Header';
 import MetricCards from './components/MetricCards';
+import TurbineVisualization from './components/TurbineVisualization';
 import LiveChart from './components/LiveChart';
+import ExperimentComparison from './components/ExperimentComparison';
 import SummaryPanel from './components/SummaryPanel';
 import PowerCharts from './components/PowerCharts';
-import ExperimentComparison from './components/ExperimentComparison';
 import HistoryTable from './components/HistoryTable';
+import SystemHealth from './components/SystemHealth';
 import './App.css';
 
 function App() {
-  const { latest, chartData, isConnected, lastUpdate } = usePolling();
+  const {
+    latest,
+    chartData,
+    isConnected,
+    lastUpdate,
+    isTelemetryFresh,
+    sessionStart,
+  } = usePolling();
+
   const [experimentId, setExperimentId] = useState('');
 
   return (
     <div className="app">
+      {/* ═══ SECTION 1: Header ═══ */}
       <Header
         isConnected={isConnected}
         lastUpdate={lastUpdate}
         source={latest?.source}
+        isTelemetryFresh={isTelemetryFresh}
       />
 
       <main className="dashboard">
-        {/* Section: Live Telemetry */}
-        <section className="section">
-          <h2 className="section-title">Live Telemetry</h2>
+        {/* ═══ SECTION 2: Live Telemetry Cards ═══ */}
+        <section className="dashboard-section" id="section-telemetry">
+          <div className="section-label">
+            <svg className="section-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            <span className="section-label-text">Live Telemetry</span>
+          </div>
           <MetricCards data={latest} />
         </section>
 
-        {/* Section: Live Trend Chart */}
-        <section className="section">
+        {/* ═══ SECTION 3: Turbine Visualization ═══ */}
+        <section className="dashboard-section" id="section-turbine">
+          <TurbineVisualization data={latest} />
+        </section>
+
+        {/* ═══ SECTION 4: Live Trend Chart ═══ */}
+        <section className="dashboard-section" id="section-chart">
           <LiveChart data={chartData} />
         </section>
 
-        {/* Section: Experiment Filter */}
-        <section className="section">
-          <ExperimentComparison onExperimentChange={setExperimentId} />
+        {/* ═══ SECTION 5: Experiments ═══ */}
+        <section className="dashboard-section" id="section-experiments">
+          <ExperimentComparison
+            onExperimentChange={setExperimentId}
+            currentExperimentId={latest?.experimentId}
+          />
         </section>
 
-        {/* Section: Summary Statistics */}
-        <section className="section">
-          <SummaryPanel experimentId={experimentId} />
-        </section>
-
-        {/* Section: Power Analysis Charts */}
-        <section className="section">
-          <h2 className="section-title">Power Analysis</h2>
+        {/* ═══ SECTION 6: Power Analysis ═══ */}
+        <section className="dashboard-section" id="section-power">
+          <div className="section-label">
+            <svg className="section-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span className="section-label-text">Power Analysis</span>
+          </div>
+          <p className="section-description">
+            Relationship between wind conditions and power output
+          </p>
           <PowerCharts experimentId={experimentId} />
         </section>
 
-        {/* Section: Historical Data Table */}
-        <section className="section">
+        {/* ═══ SECTION 7: Summary Statistics ═══ */}
+        <section className="dashboard-section" id="section-summary">
+          <SummaryPanel experimentId={experimentId} />
+        </section>
+
+        {/* ═══ SECTION 8: Historical Data ═══ */}
+        <section className="dashboard-section" id="section-history">
           <HistoryTable experimentId={experimentId} />
+        </section>
+
+        {/* ═══ SECTION 9: System Health ═══ */}
+        <section className="dashboard-section" id="section-health">
+          <SystemHealth
+            isConnected={isConnected}
+            isTelemetryFresh={isTelemetryFresh}
+            latest={latest}
+            sessionStart={sessionStart}
+          />
         </section>
       </main>
 
       <footer className="app-footer">
-        <p>Wind Turbine IoT Monitoring System — University Engineering Project</p>
+        <div className="footer-left">
+          Wind Turbine Monitoring System • Final Year Project
+        </div>
+        <div className="footer-right">
+          <span className="footer-dot" />
+          <span>Live Data • Clean Energy • A Sustainable Future</span>
+        </div>
       </footer>
     </div>
   );
